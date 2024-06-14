@@ -67,27 +67,24 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
                 sent_signals[stock_code] = signal
     return sent_signals
 
-# Kiểm tra sự tồn tại của các khóa
-if "TELEGRAM_TOKEN" not in st.secrets or "TELEGRAM_CHAT_ID" not in st.secrets:
-    st.error("TELEGRAM_TOKEN and TELEGRAM_CHAT_ID must be set in the secrets.")
-else:
-    TELEGRAM_TOKEN = st.secrets["TELEGRAM_TOKEN"]
-    TELEGRAM_CHAT_ID = st.secrets["TELEGRAM_CHAT_ID"]
+# Token và chat_id của Telegram bot
+TELEGRAM_TOKEN = st.secrets["TELEGRAM_TOKEN"]
+TELEGRAM_CHAT_ID = st.secrets["TELEGRAM_CHAT_ID"]
 
-    # Từ điển lưu trữ trạng thái tín hiệu đã gửi của các mã cổ phiếu
-    sent_signals = st.session_state.get('sent_signals', {})
+# Từ điển lưu trữ trạng thái tín hiệu đã gửi của các mã cổ phiếu
+sent_signals = st.session_state.get('sent_signals', {})
 
-    st.title("Stock Trading Signals")
+st.title("Stock Trading Signals")
 
-    # Tải dữ liệu từ Google Sheets
-    client = get_google_sheet_client()
-    sheet = client.open_by_url(st.secrets["GOOGLE_SHEET_URL"]).sheet1
-    data = sheet.get_all_records()
-    df = pd.DataFrame(data)
+# Tải dữ liệu từ Google Sheets
+client = get_google_sheet_client()
+sheet = client.open_by_url(st.secrets["GOOGLE_SHEET_URL"]).sheet1
+data = sheet.get_all_records()
+df = pd.DataFrame(data)
 
-    if st.button("Check Signals"):
-        sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
-        st.session_state.sent_signals = sent_signals
-        st.success("Signals checked and notifications sent if any new signals found.")
+if st.button("Check Signals"):
+    sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
+    st.session_state.sent_signals = sent_signals
+    st.success("Signals checked and notifications sent if any new signals found.")
 
-    st.dataframe(df)
+st.dataframe(df)
