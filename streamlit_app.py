@@ -54,7 +54,7 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
 
             if send_message:
                 current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                if signal == 'MUA TIÊU CHUẨN' hoặc signal == 'MUA BÙNG NỔ':
+                if signal == 'MUA TIÊU CHUẨN' or signal == 'MUA BÙNG NỔ':
                     adjusted_price = row['Giá hiện tại'] * 1.01
                     action_message = f"Giá mua an toàn khi < {adjusted_price:.2f}"
                 else:
