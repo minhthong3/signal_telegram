@@ -100,5 +100,4 @@ st.session_state.sent_signals = sent_signals
 
 st.dataframe(df)
 
-# Auto-refresh mỗi 10 giây
-st_autorefresh(interval=10 * 1000, key="data_refresh")
+
