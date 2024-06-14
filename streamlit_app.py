@@ -96,8 +96,6 @@ df = pd.DataFrame(data)
 sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 st.session_state.sent_signals = sent_signals
 
-
-
 st.dataframe(df)
 
 
