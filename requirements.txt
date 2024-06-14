@@ -3,5 +3,4 @@ gspread
 oauth2client
 requests
 pandas
-oauth2client.service_account
-google.oauth2.service_account
+
