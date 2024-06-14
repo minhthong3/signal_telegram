@@ -9,7 +9,7 @@ from datetime import datetime
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
 TELEGRAM_TOKEN = '7405333641:AAHVOn9RbL0K33_4OoZeUq0SJqS07uSlN4Q'
 TELEGRAM_CHAT_ID = '-4257628203'
-GCP_SERVICE_ACCOUNT_FILE = 'datavnwealth-25a353ea3781.json'  # Đường dẫn tới tệp JSON của bạn
+GCP_SERVICE_ACCOUNT_FILE = 'path/to/your/service_account.json'  # Đường dẫn tới tệp JSON của bạn
 
 # Hàm để lấy dữ liệu từ Google Sheets
 @st.experimental_singleton
@@ -82,15 +82,22 @@ sent_signals = st.session_state.get('sent_signals', {})
 
 st.title("Stock Trading Signals")
 
+# Auto-refresh mỗi 10 giây
+st_autorefresh(interval=10 * 1000, key="data_refresh")
+
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
 sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
 
-if st.button("Check Signals"):
-    sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
-    st.session_state.sent_signals = sent_signals
-    st.success("Signals checked and notifications sent if any new signals found.")
+# Kiểm tra tín hiệu và gửi thông báo
+sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
+st.session_state.sent_signals = sent_signals
+
+
 
 st.dataframe(df)
+
+# Auto-refresh mỗi 10 giây
+st_autorefresh(interval=10 * 1000, key="data_refresh")
