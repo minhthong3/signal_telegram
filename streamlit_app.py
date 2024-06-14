@@ -45,11 +45,11 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
                         send_message = True
                     elif signal == 'BÁN HẾT' and last_signal not in ['MUA TIÊU CHUẨN', 'MUA BÙNG NỔ', 'MUA BẮT ĐÁY']:
                         send_message = True
-                    elif signal == 'BÁN 50%' và last_signal not in ['MUA TIÊU CHUẨN', 'MUA BÙNG NỔ', 'BÁN HẾT', 'MUA BẮT ĐÁY']:
+                    elif signal == 'BÁN 50%' and last_signal not in ['MUA TIÊU CHUẨN', 'MUA BÙNG NỔ', 'BÁN HẾT', 'MUA BẮT ĐÁY']:
                         send_message = True
-                    elif signal == 'MUA BÙNG NỔ' và last_signal in ['MUA TIÊU CHUẨN', 'BÁN HẾT', 'BÁN 50%']:
+                    elif signal == 'MUA BÙNG NỔ' and last_signal in ['MUA TIÊU CHUẨN', 'BÁN HẾT', 'BÁN 50%']:
                         send_message = True
-                    elif signal == 'MUA BẮT ĐÁY' và last_signal in ['BÁN HẾT', 'BÁN 50%']:
+                    elif signal == 'MUA BẮT ĐÁY' and last_signal in ['BÁN HẾT', 'BÁN 50%']:
                         send_message = True
 
             if send_message:
