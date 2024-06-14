@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "datavnwealth",
+  "private_key_id": "25a353ea37816a4a2ba4f97dc73d389bfd8ca93b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvBfPeKoEuvlFo\nB8mW2kKKsWEC3rQyNE2Sstd+EvTJu6paalOSkAlnpqbkFe8KeqlzizAC8Rv34HG4\nfN6gLWc7+oXVBTuGha8ZPEhZ/lJMorgYUmId7A+I5Yr993+xZE6s2KKaI776UoZE\nSHlg8tlW0gLpWLFch23vm7uBaerxrcfoiSpELFIvGS1ndSBe2dRn87Gallyo+1CS\nnHJswZdY1svULJiXFGAswVYRnKwzo7mqyy+GqgkX/b8buXBcWGIoCOO+y/Xk2FKh\npxDgF3Eu9+CgkS9Go7k3KEBDDaPe/BdoYL5AUpqE+JpI/WGNR5P3rr14P/eMERDO\nS9nF308fAgMBAAECggEADfhMqcv8ua1pNAODHK5ZJ1bXJnJ+MY+pLW9m8eIzdbKr\n+0GHYChtB7/ujEAP72cxBU7zyxhRoixhB1e4MVLObaQmcIVVZfxfqIT+RWieSw2l\n4hMZT8gayVOBD5pkr9UQzo0QFXuK79IMc4DRZ2Ka5Goo31U7+uW4aaqlgcPhg964\nTnDwuh0hRnEA6U+06Tp898w3uisTHho21NF4/CMEqBXAal5ElSa4RbZsl9siNLhA\nhdMSrOuZAW0noEe3BNJ1RuKmxgutYcZLYAuB7fbnnCqSVCnyZq23x8F7xuwWb85m\nrbmWc3tv+Kh2AZQHvP18izSRiRrsDL9uTPUuOuVn4QKBgQDU8/Rd53zr4bi9aqRH\nK/bvWvjRZpS09HHENU7psTPtynXMaNKjFvZGjYSI/tvHEx/cH0lTlePRrG+bpAjZ\n2Kze/eAX42tS06Mim5ZqZidvG9/TfZS4OXcv0I8XkUquWEruVjyLeAvrWPM35Y+/\nj/k20cTsmG4q6D4TXFUJ4oBMjwKBgQDSZy8xUhKH8b/NZZBihltS9CioMrHe2dAG\nEv+iARh2p5AA7jrWD6QTCwQdXlQmRaMsrPPQSxozEDooGHASWksMeIOk0YTIMJfw\nb2+9dF3ZG/FqCS6NCxzakUKb0/n/d0i/8ZV7y8GYzVoQtQ6HXZtqq5v3dEcyTWxc\nzuy4r/Q8cQKBgQCmL1tcjPJoAlbxOu/Iuv6R/CSBBdS3AqxlulRC+w7TW1RimMsI\nizrWBEqRvpI04S/T0HagzDBlyHOwumpN11HRE7515fwzPwXoVBMmJWJQyyf5G9+b\nhP0GS3PfqHrnY+/V32aQULa8i0YDMRrlG64YoctT+ADBa0xGP5/9fs0w8QKBgA87\ny03t3EuddD6h0N9hTPFnnh33datl58rYy0tmeuf0X9fBZ98hyMZcMNMThlIzDopo\nh0qYdXAnB57pjgu2H+LqQtXHGa8I3adZ2iREbZsPi94ahhVOLauhgsoXge0+LLVA\n/4q0CPNQQuocwc2JOHxzqlozQAhjVKovjTIeAzfxAoGAL6akH/S1OQKDrdsx2u2m\nQkyWWmAkfao8DPeM+jsoKZsBpuY9BJMv4GQIOe5CXR+5NY1wp9+VIEOqNNiPj0Bk\nZCtbo+7IKu6EHAzH5ZVW3o3Tow1LvZ+wuk4GN/3BD1BmPqwHv8lDuye/J6FcJYR9\nGymjYsCyGrmh/mMG0jvTMd8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "datavnwealth@datavnwealth.iam.gserviceaccount.com",
+  "client_id": "101518377813613574062",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/datavnwealth%40datavnwealth.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
