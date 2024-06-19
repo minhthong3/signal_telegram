@@ -73,8 +73,6 @@ TELEGRAM_CHAT_ID = TELEGRAM_CHAT_ID
 sent_signals = st.session_state.get('sent_signals', {})
 st.title("Stock Trading Signals")
 
-# Auto-refresh mỗi 10 giây
-st_autorefresh(interval=10 * 1000, key="data_refresh")
 
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
@@ -86,3 +84,7 @@ df = pd.DataFrame(data)
 sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 st.session_state.sent_signals = sent_signals
 st.dataframe(df)
+
+# Auto-refresh mỗi 10 giây
+st_autorefresh(interval=10 * 1000, key="data_refresh")
+
