@@ -4,7 +4,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import requests
 import pandas as pd
 from datetime import datetime
-import time
 
 # Cấu hình Google Sheets
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
@@ -30,6 +29,7 @@ def send_telegram_message(bot_token, chat_id, message):
 
 # Hàm kiểm tra tín hiệu và gửi tin nhắn
 def notify_signals(df, sent_signals, bot_token, chat_id):
+    new_sent_signals = sent_signals.copy()  # Tạo bản sao của từ điển tín hiệu đã gửi
     for index, row in df.iterrows():
         stock_code = row['Mã']
         signal = row['Tín hiệu']
@@ -71,8 +71,8 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
                 send_telegram_message(bot_token, chat_id, message)
 
                 # Cập nhật trạng thái tín hiệu đã gửi
-                sent_signals[stock_code] = signal
-    return sent_signals
+                new_sent_signals[stock_code] = signal
+    return new_sent_signals
 
 # Token và chat_id của Telegram bot
 TELEGRAM_TOKEN = TELEGRAM_TOKEN
@@ -84,19 +84,16 @@ if 'sent_signals' not in st.session_state:
 
 st.title("Stock Trading Signals")
 
+# Auto-refresh mỗi 10 giây
+countdown = st_autorefresh(interval=10 * 1000, key="data_refresh")
+
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
 sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
+data = sheet.get_all_records()
+df = pd.DataFrame(data)
 
-# Vòng lặp kiểm tra tín hiệu và gửi thông báo
-while True:
-    data = sheet.get_all_records()
-    df = pd.DataFrame(data)
+# Kiểm tra tín hiệu và gửi thông báo
+st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 
-    # Kiểm tra tín hiệu và gửi thông báo
-    st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
-
-    st.dataframe(df)
-    
-    # Dừng 10 giây trước khi kiểm tra lại
-    time.sleep(10)
+st.dataframe(df)
