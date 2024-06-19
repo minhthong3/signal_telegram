@@ -69,18 +69,19 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
 # Token và chat_id của Telegram bot
 TELEGRAM_TOKEN = TELEGRAM_TOKEN
 TELEGRAM_CHAT_ID = TELEGRAM_CHAT_ID
-# Auto-refresh mỗi 10 giây
-st_autorefresh(interval=10 * 1000, key="data_refresh")
 # Từ điển lưu trữ trạng thái tín hiệu đã gửi của các mã cổ phiếu
 sent_signals = st.session_state.get('sent_signals', {})
 st.title("Stock Trading Signals")
+
 # Auto-refresh mỗi 10 giây
 st_autorefresh(interval=10 * 1000, key="data_refresh")
+
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
 sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
+
 # Kiểm tra tín hiệu và gửi thông báo
 sent_signals = notify_signals(df, sent_signals, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 st.session_state.sent_signals = sent_signals
