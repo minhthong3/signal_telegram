@@ -84,7 +84,8 @@ if 'sent_signals' not in st.session_state:
 st.title("Stock Trading Signals")
 
 # Auto-refresh mỗi 10 giây
-countdown = st_autorefresh(interval=10 * 1000, key="data_refresh")
+st.experimental_rerun()
+countdown = st.autorefresh(interval=10 * 1000, key="data_refresh")
 
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
