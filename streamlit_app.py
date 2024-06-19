@@ -69,6 +69,8 @@ def notify_signals(df, sent_signals, bot_token, chat_id):
 # Token và chat_id của Telegram bot
 TELEGRAM_TOKEN = TELEGRAM_TOKEN
 TELEGRAM_CHAT_ID = TELEGRAM_CHAT_ID
+# Auto-refresh mỗi 10 giây
+st_autorefresh(interval=10 * 1000, key="data_refresh")
 # Từ điển lưu trữ trạng thái tín hiệu đã gửi của các mã cổ phiếu
 sent_signals = st.session_state.get('sent_signals', {})
 st.title("Stock Trading Signals")
