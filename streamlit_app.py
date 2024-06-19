@@ -4,6 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import requests
 import pandas as pd
 from datetime import datetime
+import time
 
 # Cấu hình Google Sheets
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
@@ -83,17 +84,19 @@ if 'sent_signals' not in st.session_state:
 
 st.title("Stock Trading Signals")
 
-# Auto-refresh mỗi 10 giây
-st.experimental_rerun()
-countdown = st.autorefresh(interval=10 * 1000, key="data_refresh")
-
 # Tải dữ liệu từ Google Sheets
 client = get_google_sheet_client()
 sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
-data = sheet.get_all_records()
-df = pd.DataFrame(data)
 
-# Kiểm tra tín hiệu và gửi thông báo
-st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
+# Vòng lặp kiểm tra tín hiệu và gửi thông báo
+while True:
+    data = sheet.get_all_records()
+    df = pd.DataFrame(data)
 
-st.dataframe(df)
+    # Kiểm tra tín hiệu và gửi thông báo
+    st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
+
+    st.dataframe(df)
+    
+    # Dừng 10 giây trước khi kiểm tra lại
+    time.sleep(10)
