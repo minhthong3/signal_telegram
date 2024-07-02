@@ -90,7 +90,7 @@ def main():
         st.dataframe(df)
 
         # Dừng 10 giây trước khi kiểm tra lại
-        time.sleep(10)
+        time.sleep(60)
 
 if __name__ == "__main__":
     main()
