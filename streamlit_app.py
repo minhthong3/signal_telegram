@@ -1,31 +1,17 @@
 import streamlit as st
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import requests
 import pandas as pd
+import requests
 from datetime import datetime
 import time
-import json
 
 # Cấu hình Google Sheets
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
-TELEGRAM_TOKEN = st.secrets["TELEGRAM_TOKEN"]
-TELEGRAM_CHAT_ID = st.secrets["TELEGRAM_CHAT_ID"]
-GCP_SERVICE_ACCOUNT_FILE = st.secrets["GCP_SERVICE_ACCOUNT_FILE"]  # JSON từ secrets
-
-
-# Hàm để lấy dữ liệu từ Google Sheets
-@st.experimental_singleton
-def get_google_sheet_client():
-    scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
-             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(GCP_SERVICE_ACCOUNT_FILE, scope)
-    client = gspread.authorize(creds)
-    return client
+TELEGRAM_TOKEN = '7405333641:AAHVOn9RbL0K33_4OoZeUq0SJqS07uSlN4Q'
+TELEGRAM_CHAT_ID = '-4257628203'
 
 # Hàm gửi tin nhắn Telegram
 def send_telegram_message(bot_token, chat_id, message):
-    url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(bot_token, chat_id, message) # thêm chữ bot trước token so với code cũ
+    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
     params = {'chat_id': chat_id, 'text': message}
     response = requests.post(url, params=params)
     return response
@@ -87,14 +73,16 @@ if 'sent_signals' not in st.session_state:
 
 st.title("Stock Trading Signals")
 
-# Tải dữ liệu từ Google Sheets
-client = get_google_sheet_client()
-sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
+# Hàm tải dữ liệu từ Google Sheets
+@st.experimental_memo
+def load_data_from_gsheets(url):
+    csv_url = url.replace('/edit#gid=', '/export?format=csv&gid=')
+    df = pd.read_csv(csv_url)
+    return df
 
 def main():
     while True:
-        data = sheet.get_all_records()
-        df = pd.DataFrame(data)
+        df = load_data_from_gsheets(GOOGLE_SHEET_URL)
 
         # Kiểm tra tín hiệu và gửi thông báo
         st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
