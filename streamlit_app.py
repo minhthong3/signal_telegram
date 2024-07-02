@@ -25,7 +25,7 @@ def get_google_sheet_client():
 
 # Hàm gửi tin nhắn Telegram
 def send_telegram_message(bot_token, chat_id, message):
-    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+    url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(bot_token, chat_id, message) # thêm chữ bot trước token so với code cũ
     params = {'chat_id': chat_id, 'text': message}
     response = requests.post(url, params=params)
     return response
