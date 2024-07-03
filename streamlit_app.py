@@ -6,7 +6,7 @@ import time
 
 # Cấu hình Google Sheets
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
-GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit?usp=sharing"
+
 TELEGRAM_TOKEN = '7405333641:AAHVOn9RbL0K33_4OoZeUq0SJqS07uSlN4Q'
 TELEGRAM_CHAT_ID = '-4257628203'
 
