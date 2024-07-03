@@ -1,13 +1,25 @@
 import streamlit as st
-import pandas as pd
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 import requests
+import pandas as pd
 from datetime import datetime
 import time
 
 # Cấu hình Google Sheets
-GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit?gid=0#gid=0"
+GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1kkOjUihnNpcWn8jmNM7majctXlqU18fGvwlTOVi9efg/edit#gid=0"
 TELEGRAM_TOKEN = '7405333641:AAHVOn9RbL0K33_4OoZeUq0SJqS07uSlN4Q'
 TELEGRAM_CHAT_ID = '-4257628203'
+GCP_SERVICE_ACCOUNT_FILE = 'datavnwealth-25a353ea3781.json'  # Đường dẫn tới tệp JSON của bạn
+
+# Hàm để lấy dữ liệu từ Google Sheets
+@st.experimental_singleton
+def get_google_sheet_client():
+    scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+             "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(GCP_SERVICE_ACCOUNT_FILE, scope)
+    client = gspread.authorize(creds)
+    return client
 
 # Hàm gửi tin nhắn Telegram
 def send_telegram_message(bot_token, chat_id, message):
@@ -73,16 +85,14 @@ if 'sent_signals' not in st.session_state:
 
 st.title("Stock Trading Signals")
 
-# Hàm tải dữ liệu từ Google Sheets
-@st.experimental_memo
-def load_data_from_gsheets(url):
-    csv_url = url.replace('/edit#gid=', '/export?format=csv&gid=')
-    df = pd.read_csv(csv_url)
-    return df
+# Tải dữ liệu từ Google Sheets
+client = get_google_sheet_client()
+sheet = client.open_by_url(GOOGLE_SHEET_URL).sheet1
 
 def main():
     while True:
-        df = load_data_from_gsheets(GOOGLE_SHEET_URL)
+        data = sheet.get_all_records()
+        df = pd.DataFrame(data)
 
         # Kiểm tra tín hiệu và gửi thông báo
         st.session_state['sent_signals'] = notify_signals(df, st.session_state['sent_signals'], TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
@@ -90,7 +100,7 @@ def main():
         st.dataframe(df)
 
         # Dừng 10 giây trước khi kiểm tra lại
-        time.sleep(60)
+        time.sleep(10)
 
 if __name__ == "__main__":
     main()
